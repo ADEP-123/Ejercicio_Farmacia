@@ -6,3 +6,4 @@ export default router;
 
 //1. Obtener todos los pacientes alfabéticamente
 router.get("/getUsuarios", categoriaController.getUsuarios);
+router.get("/getCitas", categoriaController.getDates);

@@ -9,11 +9,24 @@ const getUsuarios = (req, res) => {
             res.status(500).json({ error: err.message });
         }
         else {
-            res.json(data)
+            res.json(data);
         }
     });
-
 }
+
+// 2. Obtener todas las citas alfabéticamente
+const getDates = (req, res) => {
+    connection.query(/*sql*/`SELECT cit_codigo AS CODIGO, cit_fecha AS FECHA, cit_estadoCita AS ESTADO, cit_medico AS MEDICO, cit_datosUsuario AS USUARIO FROM cita ORDER BY cit_fecha ASC`, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        }
+        else {
+            res.json(data);
+        }
+    })
+}
+
 export const methodsHTTP = {
-    getUsuarios
+    getUsuarios,
+    getDates
 }
