@@ -3,3 +3,6 @@ import { methodsHTTP as categoriaController } from '../controller/categoria.cont
 const router = Router();
 
 export default router;
+
+//1. Obtener todos los pacientes alfabéticamente
+router.get("/getUsuarios", categoriaController.getUsuarios);
