@@ -25,4 +25,7 @@ router.get("/getMeetPatient", categoriaController.getMeetPatient);
 //7. Encontrar todas las citas para un día específico
 router.get("/getMeetsDate", categoriaController.getMeetsDate);
 
+//8. Obtener los médicos y sus consultorios
+router.get("/getMedicsAndConsultories", categoriaController.getMedicsAndConsultories);
+
 

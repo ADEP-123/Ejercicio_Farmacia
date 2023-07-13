@@ -92,6 +92,17 @@ const getMeetsDate = (req, res) => {
     })
 }
 
+//8. Obtener los médicos y sus consultorios
+const getMedicsAndConsultories = (req, res) => {
+    connection.query(/*sql*/`SELECT A.med_nroMatriculaProsional AS ID, A.med_nombreCompleto AS NOMBRE, A.med_consultorio AS CONSULTORIO, A.med_especialidad AS ID_ESPECIALIDAD, B.cons_nombre AS NOMBRE_CONSULTORIO FROM medico A JOIN consultorio B ON A.med_consultorio = B.cons_codigo`, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        }
+        else {
+            res.json({ message: `Se han encontrado ${data.length} registros`, data: data })
+        }
+    })
+}
 
 export const methodsHTTP = {
     getUsuarios,
@@ -100,5 +111,6 @@ export const methodsHTTP = {
     getNextMeet,
     getPatients,
     getMeetPatient,
-    getMeetsDate
+    getMeetsDate,
+    getMedicsAndConsultories
 }
