@@ -41,3 +41,4 @@ cambio a datetime de cita fecha
 se considero que el acudiente puede ser nulo para aquellos mayores de edad
 en la consulta numero 5 se eliminan aquellos que la cita ya paso o que la cancelaron
 en la consulta 10 se asume que la busqueda se realizara por codigo de cita
+recordar que si no tiene segundo nombre enviar como "", el acudiente como 0

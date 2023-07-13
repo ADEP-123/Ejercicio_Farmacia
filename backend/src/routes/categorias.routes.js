@@ -37,6 +37,9 @@ router.get("/getMeetConsultory", categoriaController.getMeetConsultory);
 //11.Obtener todas las citas realizadas por los pacientes de un genero si su estado de la cita fue atendida
 router.get("/getMeetGender", categoriaController.getMeetGender);
 
+//12.Insertar un paciente a la tabla usuario pero si es menor de edad solicitar primero que ingrese el acudiente y validar si ya estaba registrado el acudiente.
+router.post("/postPatient", categoriaController.postPatient);
+
 
 
 

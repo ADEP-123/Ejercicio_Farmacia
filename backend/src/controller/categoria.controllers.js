@@ -1,3 +1,4 @@
+import { query } from "express";
 import getConnection from "../db/database.js";
 const connection = getConnection();
 
@@ -131,7 +132,7 @@ const getMeetConsultory = (req, res) => {
 }
 
 //11.Obtener todas las citas realizadas por los pacientes de un genero si su estado de la cita fue atendida
-const getMeetGender= (req, res) => {
+const getMeetGender = (req, res) => {
     const { GENERO } = req.query;
     connection.query(/*sql*/`SELECT A.cit_codigo AS CODIGO_CITA, A.cit_fecha AS FECHA_CITA, A.cit_medico AS MEDICO, A.cit_datosUsuario AS ID_PACIENTE, B.usu_nombre AS PRIM_NOMBRE_PACIENTE, B.usu_segdo_nombre AS SEG_NOMBRE_PACIENTE, B.usu_primer_apellido_usuar AS PRIM_APELLIDO_PACIENTE, B.usu_segdo_apellido_usuar AS SEG_APELLIDO_PACIENTE FROM cita A JOIN usuario B ON A.cit_datosUsuario = B.usu_id WHERE A.cit_estadoCita = 5 AND B.usu_genero = ${GENERO}`, (err, data) => {
         if (err) {
@@ -141,6 +142,53 @@ const getMeetGender= (req, res) => {
             res.json({ message: `Se han encontrado ${data.length} citas atendidas a ese genero`, data: data })
         }
     })
+}
+//12.Insertar un paciente a la tabla usuario pero si es menor de edad solicitar primero que ingrese el acudiente y validar si ya estaba registrado el acudiente.
+const postPatient = (req, res) => {
+    const { ID, PRIM_NOMBRE, SEG_NOMBRE, PRIM_APELLIDO, SEG_APELLIDO, TELEFONO, DIRECCION, EMAIL, FECHA_NAC, TIPO_DOC, GENERO, ACUDIENTE } = req.body
+    const fechaRegex = /^\d{4}-\d{2}-\d{2}$/;
+    const bodyValues = Object.values(req.body);
+    let fecha = "0";
+    bodyValues.forEach(value => {
+        if (fechaRegex.test(value) == true) {
+            fecha = new Date(value);
+        }
+    });
+    if (fecha == "0") {
+        res.status(500).json({ error: `El formato de fecha no coincide o no fue enviado` });
+    } else {
+        const edad = Math.floor((new Date() - fecha) / (1000 * 60 * 60 * 24 * 365.25));
+        if (edad < 18) {
+            connection.query(/*sql*/`SELECT * FROM acudiente WHERE acu_codigo = ${ACUDIENTE}`, (err, data, fil) => {
+                if (err) {
+                    res.status(500).json({ error: err });
+                } else {
+                    if (data.length != 0) {
+                        connection.query(/*sql*/`INSERT INTO usuario (usu_id, usu_nombre, usu_segdo_nombre, usu_primer_apellido_usuar, usu_segdo_apellido_usuar, usu_telefono, usu_direccion, usu_e_mail, usu_fechNAc, usu_tipodoc, usu_genero, usu_acudiente) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`, [ID, PRIM_NOMBRE, SEG_NOMBRE, PRIM_APELLIDO, SEG_APELLIDO, TELEFONO, DIRECCION, EMAIL, FECHA_NAC, TIPO_DOC, GENERO, ACUDIENTE], (err, data, fil) => {
+                            if (err) {
+                                res.status(500).json({ error: err });
+                            } else {
+
+                                res.json({ message: 'Data ingresada con exito', data: data });
+                            }
+                        });
+                    } else { res.json({ message: 'El acudiente no existe, por favor primero cree los datos del acudiente' }); }
+                }
+            });
+        } else {
+            let ACUDIENTE2;
+            ACUDIENTE == 0 ? ACUDIENTE2 = null : ACUDIENTE2 = ACUDIENTE;
+            connection.query(/*sql*/`INSERT INTO usuario (usu_id, usu_nombre, usu_segdo_nombre, usu_primer_apellido_usuar, usu_segdo_apellido_usuar, usu_telefono, usu_direccion, usu_e_mail, usu_fechNAc, usu_tipodoc, usu_genero, usu_acudiente) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)`, [ID, PRIM_NOMBRE, SEG_NOMBRE, PRIM_APELLIDO, SEG_APELLIDO, TELEFONO, DIRECCION, EMAIL, FECHA_NAC, TIPO_DOC, GENERO, ACUDIENTE2], (err, data, fil) => {
+                if (err) {
+                    res.status(500).json({ error: err });
+                } else {
+
+                    res.json({ message: 'Data ingresada con exito', data: data });
+                }
+            });
+        }
+
+    }
 }
 export const methodsHTTP = {
     getUsuarios,
@@ -153,5 +201,6 @@ export const methodsHTTP = {
     getMedicsAndConsultories,
     getMeetsAmount,
     getMeetConsultory,
-    getMeetGender
+    getMeetGender,
+    postPatient
 }
