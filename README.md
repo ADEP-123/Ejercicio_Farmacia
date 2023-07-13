@@ -39,3 +39,4 @@
 notas: creacion de fecha de nacimiento para usuario
 cambio a datetime de cita fecha
 se considero que el acudiente puede ser nulo para aquellos mayores de edad
+en la consulta numero 5 se eliminan aquellos que la cita ya paso o que la cancelaron

@@ -43,11 +43,25 @@ const getSpecialist = (req, res) => {
 const getNextMeet = (req, res) => {
     const { USUARIO } = req.query;
     connection.query(/*sql*/`SELECT cit_codigo AS CODIGO, cit_fecha AS FECHA, cit_estadoCita AS ESTADO, cit_medico AS MEDICO, cit_datosUsuario AS USUARIO FROM cita WHERE cit_fecha > NOW() AND cit_datosUsuario = ${USUARIO} ORDER BY cit_fecha ASC`, (err, data) => {
-        if(err){
+        if (err) {
             res.status(500).json({ error: err.message });
         }
-        else{
+        else {
             res.json(data)
+        }
+    })
+}
+
+//5. Encontrar todos los pacientes que tienen citas con un médico específico 
+const getPatients = (req, res) => {
+
+    const { MEDICO } = req.query;
+    connection.query(/*sql*/`SELECT A.cit_codigo AS CODIGO_CITA, A.cit_Fecha AS FECHA, A.cit_datosUsuario AS ID_PACIENTE, B.usu_nombre AS PRIM_NOMBRE_PACIENTE, B.usu_segdo_nombre AS SEG_NOMBRE_PACIENTE, B.usu_primer_apellido_usuar AS PRIM_APELLIDO_PACIENTE, B.usu_segdo_apellido_usuar AS SEG_APELLIDO_PACIENTE FROM cita A JOIN usuario B ON A.cit_datosUsuario = B.usu_id WHERE A.cit_medico = ${MEDICO} AND A.cit_estadoCita <> 3 AND A.cit_estadoCita <> 4`, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        }
+        else {
+            res.json({ message: `Se han encontrado ${data.length} citas activas`, data: data })
         }
     })
 }
@@ -56,5 +70,6 @@ export const methodsHTTP = {
     getUsuarios,
     getDates,
     getSpecialist,
-    getNextMeet
+    getNextMeet,
+    getPatients
 }
