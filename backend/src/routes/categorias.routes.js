@@ -4,6 +4,7 @@ import proxyMedicoEspecialidad from '../middlewares/proxyMedicoEspecialidad.js';
 import proxyProximaCita from '../middlewares/proxyProximaCita.js';
 import proxiPacientesMedico from '../middlewares/proxyPacientesMedico.js';
 import proxyCitaPaciente from '../middlewares/poxyCitaPaciente.js';
+import proxyCitaFecha from '../middlewares/proxyCitaFecha.js';
 const router = Router();
 
 export default router;
@@ -27,7 +28,7 @@ router.get("/getPatients", proxiPacientesMedico, categoriaController.getPatients
 router.get("/getMeetPatient", proxyCitaPaciente, categoriaController.getMeetPatient);
 
 //7. Encontrar todas las citas para un día específico
-router.get("/getMeetsDate", categoriaController.getMeetsDate);
+router.get("/getMeetsDate", proxyCitaFecha, categoriaController.getMeetsDate);
 
 //8. Obtener los médicos y sus consultorios
 router.get("/getMedicsAndConsultories", categoriaController.getMedicsAndConsultories);
