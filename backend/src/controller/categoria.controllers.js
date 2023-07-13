@@ -79,7 +79,18 @@ const getMeetPatient = (req, res) => {
     })
 }
 
-
+//7. Encontrar todas las citas para un día específico
+const getMeetsDate = (req, res) => {
+    const { FECHA } = req.query;
+    connection.query(/*sql*/`SELECT cit_codigo AS CODIGO_CITA, cit_fecha AS FECHA_CITA, cit_estadoCita AS ESTADO, cit_medico AS MEDICO, cit_datosUsuario AS PACIENTE FROM cita WHERE DATE(cit_fecha) = ${FECHA}`, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        }
+        else {
+            res.json({ message: `Se han encontrado ${data.length} citas`, data: data })
+        }
+    })
+}
 
 
 export const methodsHTTP = {
@@ -89,5 +100,5 @@ export const methodsHTTP = {
     getNextMeet,
     getPatients,
     getMeetPatient,
-
+    getMeetsDate
 }
