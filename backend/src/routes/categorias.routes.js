@@ -7,6 +7,7 @@ import proxyCitaPaciente from '../middlewares/poxyCitaPaciente.js';
 import proxyCitaFecha from '../middlewares/proxyCitaFecha.js';
 import proxyCantidadCitas from '../middlewares/ProxyCantidadCitas.js';
 import proxyConsultorioPaciente from '../middlewares/proxyConsultorioPaciente.js';
+import proxyCitasAtendidasGenero from '../middlewares/proxyCitasAtendidasGenero.js';
 const router = Router();
 
 export default router;
@@ -42,7 +43,7 @@ router.get("/getMeetsAmount", proxyCantidadCitas, categoriaController.getMeetsAm
 router.get("/getMeetConsultory", proxyConsultorioPaciente, categoriaController.getMeetConsultory);
 
 //11.Obtener todas las citas realizadas por los pacientes de un genero si su estado de la cita fue atendida
-router.get("/getMeetGender", categoriaController.getMeetGender);
+router.get("/getMeetGender", proxyCitasAtendidasGenero, categoriaController.getMeetGender);
 
 //12.Insertar un paciente a la tabla usuario pero si es menor de edad solicitar primero que ingrese el acudiente y validar si ya estaba registrado el acudiente.
 router.post("/postPatient", categoriaController.postPatient);
