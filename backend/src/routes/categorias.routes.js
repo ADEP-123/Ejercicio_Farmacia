@@ -13,5 +13,6 @@ router.get("/getCitas", categoriaController.getDates);
 //3. Obtener todos los médicos de una especialidad específica
 router.get("/getSpecialist", categoriaController.getSpecialist);
 
-
+//4. Encontrar la próxima cita para un paciente específico (por ejemplo, el paciente con **usu_id 1**)
+router.get("/getNextMeet", categoriaController.getNextMeet);
 

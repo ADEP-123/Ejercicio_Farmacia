@@ -39,11 +39,22 @@ const getSpecialist = (req, res) => {
     })
 }
 
-
+//4. Encontrar la próxima cita para un paciente específico
+const getNextMeet = (req, res) => {
+    const { USUARIO } = req.query;
+    connection.query(/*sql*/`SELECT cit_codigo AS CODIGO, cit_fecha AS FECHA, cit_estadoCita AS ESTADO, cit_medico AS MEDICO, cit_datosUsuario AS USUARIO FROM cita WHERE cit_fecha > NOW() AND cit_datosUsuario = ${USUARIO} ORDER BY cit_fecha ASC`, (err, data) => {
+        if(err){
+            res.status(500).json({ error: err.message });
+        }
+        else{
+            res.json(data)
+        }
+    })
+}
 
 export const methodsHTTP = {
     getUsuarios,
     getDates,
     getSpecialist,
-
+    getNextMeet
 }
