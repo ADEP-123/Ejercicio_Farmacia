@@ -117,6 +117,18 @@ const getMeetsAmount = (req, res) => {
     })
 }
 
+//10.Obtener los consultorio donde se aplicó las citas de un paciente
+const getMeetConsultory = (req, res) => {
+    const { PACIENTE } = req.query;
+    connection.query(/*sql*/`SELECT A.cit_codigo AS CODIGO_CITA, A.cit_fecha AS FECHA_CITA, B.med_nombreCompleto AS MEDICO, A.cit_datosUsuario AS PACIENTE, B.med_consultorio AS ID_CONSULTORIO, C.cons_nombre AS NOMBRE_CONSULTORIO FROM cita A JOIN medico B ON A.cit_medico = B.med_nroMatriculaProsional JOIN consultorio C ON B.med_consultorio = C.cons_codigo WHERE  A.cit_datosUsuario = ${PACIENTE}`, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        }
+        else {
+            res.json({ message: `Se han encontrado ${data.length} consultorios`, data: data })
+        }
+    })
+}
 export const methodsHTTP = {
     getUsuarios,
     getDates,
@@ -126,5 +138,6 @@ export const methodsHTTP = {
     getMeetPatient,
     getMeetsDate,
     getMedicsAndConsultories,
-    getMeetsAmount
+    getMeetsAmount,
+    getMeetConsultory
 }
