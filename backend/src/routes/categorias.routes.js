@@ -6,6 +6,7 @@ import proxiPacientesMedico from '../middlewares/proxyPacientesMedico.js';
 import proxyCitaPaciente from '../middlewares/poxyCitaPaciente.js';
 import proxyCitaFecha from '../middlewares/proxyCitaFecha.js';
 import proxyCantidadCitas from '../middlewares/ProxyCantidadCitas.js';
+import proxyConsultorioPaciente from '../middlewares/proxyConsultorioPaciente.js';
 const router = Router();
 
 export default router;
@@ -38,7 +39,7 @@ router.get("/getMedicsAndConsultories", categoriaController.getMedicsAndConsulto
 router.get("/getMeetsAmount", proxyCantidadCitas, categoriaController.getMeetsAmount);
 
 //10.Obtener los consultorio donde se aplicó las citas de un paciente
-router.get("/getMeetConsultory", categoriaController.getMeetConsultory);
+router.get("/getMeetConsultory", proxyConsultorioPaciente, categoriaController.getMeetConsultory);
 
 //11.Obtener todas las citas realizadas por los pacientes de un genero si su estado de la cita fue atendida
 router.get("/getMeetGender", categoriaController.getMeetGender);
