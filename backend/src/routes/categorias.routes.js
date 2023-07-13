@@ -28,4 +28,8 @@ router.get("/getMeetsDate", categoriaController.getMeetsDate);
 //8. Obtener los médicos y sus consultorios
 router.get("/getMedicsAndConsultories", categoriaController.getMedicsAndConsultories);
 
+//9. Contar el número de citas que un médico tiene en un día específico
+router.get("/getMeetsAmount", categoriaController.getMeetsAmount);
+
+
 
