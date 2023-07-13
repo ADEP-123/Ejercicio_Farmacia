@@ -8,6 +8,7 @@ import proxyCitaFecha from '../middlewares/proxyCitaFecha.js';
 import proxyCantidadCitas from '../middlewares/ProxyCantidadCitas.js';
 import proxyConsultorioPaciente from '../middlewares/proxyConsultorioPaciente.js';
 import proxyCitasAtendidasGenero from '../middlewares/proxyCitasAtendidasGenero.js';
+import proxyNuevoPaciente from '../middlewares/proxyNuevoPaciente.js';
 const router = Router();
 
 export default router;
@@ -46,7 +47,7 @@ router.get("/getMeetConsultory", proxyConsultorioPaciente, categoriaController.g
 router.get("/getMeetGender", proxyCitasAtendidasGenero, categoriaController.getMeetGender);
 
 //12.Insertar un paciente a la tabla usuario pero si es menor de edad solicitar primero que ingrese el acudiente y validar si ya estaba registrado el acudiente.
-router.post("/postPatient", categoriaController.postPatient);
+router.post("/postPatient", proxyNuevoPaciente, categoriaController.postPatient);
 
 //13.Mostrar todas las citas que fueron rechazadas y en un mes específico, mostrar la fecha de la cita, el nombre del usuario y el médico.
 router.get("/rejectedMeets", categoriaController.rejectedMeets);
