@@ -66,10 +66,28 @@ const getPatients = (req, res) => {
     })
 }
 
+//6. Obtener las consultorías para un paciente específico
+const getMeetPatient = (req, res) => {
+    const { ID_USUARIO } = req.query;
+    connection.query(/*sql*/`SELECT A.cit_codigo AS CODIGO_CITA, A.cit_fecha AS FECHA_CITA, B.med_nombreCompleto AS MEDICO, C.esp_nombre AS ESPECIALIDAD FROM cita A JOIN medico B ON A.cit_medico = B.med_nroMatriculaProsional JOIN especialidad C ON B.med_especialidad = C.esp_id WHERE cit_datosUsuario = ${ID_USUARIO}`, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        }
+        else {
+            res.json({ message: `Se han encontrado ${data.length} citas`, data: data })
+        }
+    })
+}
+
+
+
+
 export const methodsHTTP = {
     getUsuarios,
     getDates,
     getSpecialist,
     getNextMeet,
-    getPatients
+    getPatients,
+    getMeetPatient,
+
 }

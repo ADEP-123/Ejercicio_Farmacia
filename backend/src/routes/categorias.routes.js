@@ -18,3 +18,7 @@ router.get("/getNextMeet", categoriaController.getNextMeet);
 
 //5. Encontrar todos los pacientes que tienen citas con un médico específico )
 router.get("/getPatients", categoriaController.getPatients);
+
+//6. Obtener las consultorías para un paciente específico
+router.get("/getMeetPatient", categoriaController.getMeetPatient);
+
