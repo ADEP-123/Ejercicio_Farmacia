@@ -34,3 +34,8 @@
 12. Insertar un paciente a la tabla usuario pero si es menor de edad solicitar primero que ingrese el acudiente y validar si ya estaba registrado el acudiente.
     
 13. Mostrar todas las citas que fueron rechazadas y en un mes específico, mostrar la fecha de la cita, el nombre del usuario y el médico.
+
+
+notas: creacion de fecha de nacimiento para usuario
+cambio a datetime de cita fecha
+se considero que el acudiente puede ser nulo para aquellos mayores de edad

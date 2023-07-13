@@ -26,7 +26,24 @@ const getDates = (req, res) => {
     })
 }
 
+//3. Obtener todos los médicos de una especialidad específica
+const getSpecialist = (req, res) => {
+    const { ESPECIALIDAD } = req.query;
+    connection.query(/*sql*/`SELECT med_nroMatriculaProsional AS NRO_MATRICULA, med_nombreCompleto AS NOMBRE, med_consultorio AS CONSULTORIO, med_especialidad AS ESPECIALIDAD FROM medico WHERE med_especialidad = ${ESPECIALIDAD}`, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        }
+        else {
+            res.json(data);
+        }
+    })
+}
+
+
+
 export const methodsHTTP = {
     getUsuarios,
-    getDates
+    getDates,
+    getSpecialist,
+
 }
