@@ -35,7 +35,7 @@ const getSpecialist = (req, res) => {
             res.status(500).json({ error: err.message });
         }
         else {
-            res.json(data);
+            res.json({message:`Se han encontrado ${data.length} proximas citas`,data});
         }
     })
 }
@@ -48,7 +48,7 @@ const getNextMeet = (req, res) => {
             res.status(500).json({ error: err.message });
         }
         else {
-            res.json(data)
+            res.json({message:`Se han encontrado ${data.length} proximas citas`,data})
         }
     })
 }

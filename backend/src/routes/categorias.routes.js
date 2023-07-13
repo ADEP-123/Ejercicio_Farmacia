@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { methodsHTTP as categoriaController } from '../controller/categoria.controllers.js';
 import proxyMedicoEspecialidad from '../middlewares/proxyMedicoEspecialidad.js';
+import proxyProximaCita from '../middlewares/proxyProximaCita.js';
 const router = Router();
 
 export default router;
@@ -15,7 +16,7 @@ router.get("/getCitas", categoriaController.getDates);
 router.get("/getSpecialist", proxyMedicoEspecialidad, categoriaController.getSpecialist);
 
 //4. Encontrar la próxima cita para un paciente específico 
-router.get("/getNextMeet", categoriaController.getNextMeet);
+router.get("/getNextMeet", proxyProximaCita, categoriaController.getNextMeet);
 
 //5. Encontrar todos los pacientes que tienen citas con un médico específico )
 router.get("/getPatients", categoriaController.getPatients);
