@@ -5,6 +5,7 @@ import proxyProximaCita from '../middlewares/proxyProximaCita.js';
 import proxiPacientesMedico from '../middlewares/proxyPacientesMedico.js';
 import proxyCitaPaciente from '../middlewares/poxyCitaPaciente.js';
 import proxyCitaFecha from '../middlewares/proxyCitaFecha.js';
+import proxyCantidadCitas from '../middlewares/ProxyCantidadCitas.js';
 const router = Router();
 
 export default router;
@@ -34,7 +35,7 @@ router.get("/getMeetsDate", proxyCitaFecha, categoriaController.getMeetsDate);
 router.get("/getMedicsAndConsultories", categoriaController.getMedicsAndConsultories);
 
 //9. Contar el número de citas que un médico tiene en un día específico
-router.get("/getMeetsAmount", categoriaController.getMeetsAmount);
+router.get("/getMeetsAmount", proxyCantidadCitas, categoriaController.getMeetsAmount);
 
 //10.Obtener los consultorio donde se aplicó las citas de un paciente
 router.get("/getMeetConsultory", categoriaController.getMeetConsultory);
