@@ -182,13 +182,22 @@ const postPatient = (req, res) => {
                 if (err) {
                     res.status(500).json({ error: err });
                 } else {
-
                     res.json({ message: 'Data ingresada con exito', data: data });
                 }
             });
         }
-
     }
+}
+//13.Mostrar todas las citas que fueron rechazadas y en un mes específico, mostrar la fecha de la cita, el nombre del usuario y el médico.
+const rejectedMeets = (req, res) => {
+    const { MES } = req.query
+    connection.query(/*sql*/`SELECT A.cit_codigo AS CITA_ID, A.cit_fecha AS FECHA, B.med_nombreCompleto AS MEDICO, CONCAT(C.usu_nombre, C.usu_segdo_nombre, C.usu_primer_apellido_usuar,  C.usu_segdo_apellido_usuar) AS PACIENTE, D.estcita_nombre AS ESTADO_CITA FROM cita A JOIN medico B ON A.cit_medico = B.med_nroMatriculaProsional JOIN usuario C ON A.cit_datosUsuario = C.usu_id JOIN estado_cita D ON A.cit_estadoCita = D.estcita_id WHERE MONTH(A.cit_fecha) = ${MES} AND D.estcita_nombre = 'RECHAZADA'`, (err, data, fil) => {
+        if (err) {
+            res.status(500).json({ error: err });
+        } else {
+            res.json({ message: `Se econtraron ${data.length} citas rechazadas`, data: data });
+        }
+    })
 }
 export const methodsHTTP = {
     getUsuarios,
@@ -202,5 +211,6 @@ export const methodsHTTP = {
     getMeetsAmount,
     getMeetConsultory,
     getMeetGender,
-    postPatient
+    postPatient,
+    rejectedMeets
 }
