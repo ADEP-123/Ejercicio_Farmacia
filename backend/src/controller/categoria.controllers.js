@@ -129,6 +129,19 @@ const getMeetConsultory = (req, res) => {
         }
     })
 }
+
+//11.Obtener todas las citas realizadas por los pacientes de un genero si su estado de la cita fue atendida
+const getMeetGender= (req, res) => {
+    const { GENERO } = req.query;
+    connection.query(/*sql*/`SELECT A.cit_codigo AS CODIGO_CITA, A.cit_fecha AS FECHA_CITA, A.cit_medico AS MEDICO, A.cit_datosUsuario AS ID_PACIENTE, B.usu_nombre AS PRIM_NOMBRE_PACIENTE, B.usu_segdo_nombre AS SEG_NOMBRE_PACIENTE, B.usu_primer_apellido_usuar AS PRIM_APELLIDO_PACIENTE, B.usu_segdo_apellido_usuar AS SEG_APELLIDO_PACIENTE FROM cita A JOIN usuario B ON A.cit_datosUsuario = B.usu_id WHERE A.cit_estadoCita = 5 AND B.usu_genero = ${GENERO}`, (err, data) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+        }
+        else {
+            res.json({ message: `Se han encontrado ${data.length} citas atendidas a ese genero`, data: data })
+        }
+    })
+}
 export const methodsHTTP = {
     getUsuarios,
     getDates,
@@ -139,5 +152,6 @@ export const methodsHTTP = {
     getMeetsDate,
     getMedicsAndConsultories,
     getMeetsAmount,
-    getMeetConsultory
+    getMeetConsultory,
+    getMeetGender
 }

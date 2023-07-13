@@ -34,6 +34,10 @@ router.get("/getMeetsAmount", categoriaController.getMeetsAmount);
 //10.Obtener los consultorio donde se aplicó las citas de un paciente
 router.get("/getMeetConsultory", categoriaController.getMeetConsultory);
 
+//11.Obtener todas las citas realizadas por los pacientes de un genero si su estado de la cita fue atendida
+router.get("/getMeetGender", categoriaController.getMeetGender);
+
+
 
 
 
