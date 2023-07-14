@@ -13,4 +13,5 @@ proxyProximaCita.use((req, res, next) => {
         res.status(err.status).send(err)
     }
 })
+
 export default proxyProximaCita;

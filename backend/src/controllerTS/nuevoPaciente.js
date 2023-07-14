@@ -8,6 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Expose, Type, Transform } from "class-transformer";
+import { MinLength } from 'class-validator';
 export class nuevoPaciente {
     constructor(usu_id, usu_nombre, usu_segdo_nombre, usu_primer_apellido_usuar, usu_segdo_apellido_usuar, usu_telefono, usu_direccion, usu_e_mail, usu_fechNAc, usu_tipodoc, usu_genero, usu_acudiente) {
         this.ID = usu_id;
@@ -34,7 +35,7 @@ __decorate([
     Transform(({ value, key }) => { if (/^[a-z A-Z]+$/.test(value))
         return value;
     else
-        throw { status: 400, message: `Error en tipo de parametro1` }; }, { toClassOnly: true }),
+        throw { status: 400, message: `Error en tipo de parametro 1` }; }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], nuevoPaciente.prototype, "PRIM_NOMBRE", void 0);
 __decorate([
@@ -42,7 +43,7 @@ __decorate([
     Transform(({ value, key }) => { if (/^[a-z A-Z]+$/.test(value) || value == "")
         return value;
     else
-        throw { status: 400, message: `Error en tipo de parametro2` }; }, { toClassOnly: true }),
+        throw { status: 400, message: `Error en tipo de parametro 2` }; }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], nuevoPaciente.prototype, "SEG_NOMBRE", void 0);
 __decorate([
@@ -50,7 +51,7 @@ __decorate([
     Transform(({ value, key }) => { if (/^[a-z A-Z]+$/.test(value))
         return value;
     else
-        throw { status: 400, message: `Error en tipo de parametro3` }; }, { toClassOnly: true }),
+        throw { status: 400, message: `Error en tipo de parametro 3` }; }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], nuevoPaciente.prototype, "PRIM_APELLIDO", void 0);
 __decorate([
@@ -58,7 +59,7 @@ __decorate([
     Transform(({ value, key }) => { if (/^[a-z A-Z]+$/.test(value))
         return value;
     else
-        throw { status: 400, message: `Error en tipo de parametro4` }; }, { toClassOnly: true }),
+        throw { status: 400, message: `Error en tipo de parametro 4` }; }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], nuevoPaciente.prototype, "SEG_APELLIDO", void 0);
 __decorate([
@@ -66,7 +67,8 @@ __decorate([
     Transform(({ value, key }) => { if (/^[0-9]+$/.test(value))
         return value;
     else
-        throw { status: 400, message: `Error en tipo de parametro5` }; }, { toClassOnly: true }),
+        throw { status: 400, message: `Error en tipo de parametro 5` }; }, { toClassOnly: true }),
+    MinLength(10, { message: () => { throw { status: 400, message: `El telefono debe tener minimo 10 caracteres` }; } }),
     __metadata("design:type", String)
 ], nuevoPaciente.prototype, "TELEFONO", void 0);
 __decorate([
@@ -75,11 +77,13 @@ __decorate([
     __metadata("design:type", String)
 ], nuevoPaciente.prototype, "DIRECCION", void 0);
 __decorate([
-    Expose({ name: "EMAIL" }),
-    Transform(({ value, key }) => { if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value))
+    Expose({ name: "EMAIL" })
+    // @Transform(({ value, key }) => { if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) return value; else throw { status: 400, message: `Error en tipo de parametro 6`, value: value } }, { toClassOnly: true })
+    ,
+    Transform(({ value, key }) => { if (/\S+@gmail\S+.edu\S+/.test(value))
         return value;
     else
-        throw { status: 400, message: `Error en tipo de parametro6`, value: value }; }, { toClassOnly: true }),
+        throw { status: 400, message: `Error el dominio no es valido`, value: value }; }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], nuevoPaciente.prototype, "EMAIL", void 0);
 __decorate([
@@ -89,7 +93,7 @@ __decorate([
         if (/^\d{4}-\d{2}-\d{2}$/.test(fechaSinComillas))
             return value;
         else
-            throw { status: 400, message: `Error en tipo de parametro7` };
+            throw { status: 400, message: `Error en tipo de parametro 7` };
     }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], nuevoPaciente.prototype, "FECHA_NAC", void 0);
@@ -98,7 +102,7 @@ __decorate([
     Transform(({ value, key }) => { if (Math.floor(value))
         return Math.floor(value);
     else
-        throw { status: 400, message: `Error en tipo de parametro8` }; }, { toClassOnly: true }),
+        throw { status: 400, message: `Error en tipo de parametr o8` }; }, { toClassOnly: true }),
     __metadata("design:type", Number)
 ], nuevoPaciente.prototype, "TIPO_DOC", void 0);
 __decorate([
@@ -106,7 +110,7 @@ __decorate([
     Transform(({ value, key }) => { if (Math.floor(value))
         return Math.floor(value);
     else
-        throw { status: 400, message: `Error en tipo de parametro9` }; }, { toClassOnly: true }),
+        throw { status: 400, message: `Error en tipo de parametro 9` }; }, { toClassOnly: true }),
     __metadata("design:type", Number)
 ], nuevoPaciente.prototype, "GENERO", void 0);
 __decorate([
@@ -114,6 +118,6 @@ __decorate([
     Transform(({ value, key }) => { if (Math.floor(value) || value === 0)
         return Math.floor(value);
     else
-        throw { status: 400, message: `Error en tipo de parametro10`, value: Math.floor(value) }; }, { toClassOnly: true }),
+        throw { status: 400, message: `Error en tipo de parametro 10`, value: Math.floor(value) }; }, { toClassOnly: true }),
     __metadata("design:type", Number)
 ], nuevoPaciente.prototype, "ACUDIENTE", void 0);
